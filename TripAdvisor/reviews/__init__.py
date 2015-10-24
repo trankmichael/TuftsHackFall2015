@@ -17,7 +17,7 @@ def us_coords():
     data_rows = soup.findAll('tr')[3:]
     coordinate_data = [[td.getText() for td in data_rows[i].findAll('td')[1:-1]] for i in range(len(data_rows) - 1)]
     coords = [format_lat_long(cd) for cd in coordinate_data]
-    return coords
+    return coords[:3]
 
 
 def format_lat_long(cd):
@@ -47,7 +47,7 @@ def get_reviews(hotels):
     return list_of_reviews
 
 
-def hotel_reviews():
+def get_hotel_reviews():
     coords = us_coords()
     all_reviews = pd.DataFrame()
     for coord in coords:

@@ -11,7 +11,18 @@ key = "AFBD081FB72F44529BF24D87BBA2F90D"
 near_locations = "http://api.tripadvisor.com/api/partner/2.0/map/{lat_lng}/geos?key=" + key
 best_hotels = "http://api.tripadvisor.com/api/partner/2.0/location/{id}/hotels?key=" + key
 hotel_reviews = "http://api.tripadvisor.com/api/partner/2.0/location/{hotel}/reviews?key=" + key
-coords = ["42.33141,-71.099396"]
+
+# pull the lattitude and longitude data
+url_coordinates = "http://www.infoplease.com/ipa/A0001796.html"
+html_coordinates = urlopen(url_coordinates)
+soup = BeautifulSoup(html_coordinates, 'html.parser')
+
+data_rows = soup.findAll('tr')[3:] 
+
+coordinate_data = [[td.getText() for td in data_rows[i].findAll('td')[1:-1]]
+                        for i in range(len(data_rows))]
+
+coords = [cd[0] + "." cd[1] + "," + cd[2] + "." cd[3] for cd in coordinate_data]
 
 length = 10
 
@@ -37,10 +48,10 @@ def get_reviews(hotel):
     return list_of_reviews
 
 
-
-geo = requests.get(near_locations.format(lat_lng=coords[0])).json()
-loc_ids = get_loc_ids(geo)
-hotels = get_hotels(loc_ids)
-hotel_review = get_reviews(hotels)
-df = pd.DataFrame(hotel_review)
-df['loc'] = coords[0]
+for coord in coords:
+    geo = requests.get(near_locations.format(lat_lng=coord)).json()
+    loc_ids = get_loc_ids(geo)
+    hotels = get_hotels(loc_ids)
+    hotel_review = get_reviews(hotels)
+    df = pd.DataFrame(hotel_review)
+    df['loc'] = coord

@@ -35,16 +35,9 @@ for coord in coords:
 			url = url_template3.format(hotel=hotel)
 			html = urlopen(url)
 			reviews_dict = json.load(html)
-
-			
-			# for i in reviews_dict['data']:
-			# 	data = []
-			# 	data.append('col1': i['id']) 
-			# 	data.append('col2': i['rating'])
-			# 	data.append('col3': i['text'])
 			hotel_df = pd.DataFrame(data = reviews_dict['data'])
 			reviews_df = hotel_df.append(hotel_df, ignore_index = True)
-			
+
 reviews_df.drop('owner_response', axis='columns', inplace=True)
 reviews_df.drop('published_date', axis='columns', inplace=True)
 reviews_df.drop('rating_image_url', axis='columns', inplace=True)
@@ -53,9 +46,6 @@ reviews_df.drop('travel_date', axis='columns', inplace=True)
 reviews_df.drop('url', axis='columns', inplace=True)
 reviews_df.drop('user', axis='columns', inplace=True)
 reviews_df.drop('lang', axis='columns', inplace=True)
-
-
-print reviews_df.head()
 
 	 		 	#hotel_df = pd.DataFrame(data, columns = ['1', '2', '3'])
 	 		 	#print hotel_df

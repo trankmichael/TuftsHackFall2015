@@ -3,6 +3,7 @@ import indicoio
 import csv
 indicoio.config.api_key = 'cefae61c6968c29ea880d918e9a6095d'
 
+
 def clean_for_tableau(csv_file):
     df = pd.read_csv(csv_file)
     df = df[df.text != None]
@@ -10,7 +11,6 @@ def clean_for_tableau(csv_file):
     listb = [float(item.split(',')[1]) for item in df['loc']]
     df['lat'] = lista
     df['lon'] = listb
-    df.drop('loc', axis='columns', inplace=True)
     df.drop('Unnamed: 0', axis='columns', inplace=True)
     df.to_csv('data/hotel_review_cleaned.csv')
     return df

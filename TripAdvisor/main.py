@@ -44,6 +44,15 @@ for coord in coords:
 			# 	data.append('col3': i['text'])
 			hotel_df = pd.DataFrame(data = reviews_dict['data'])
 			reviews_df = hotel_df.append(hotel_df, ignore_index = True)
+			
+reviews_df.drop('owner_response', axis='columns', inplace=True)
+reviews_df.drop('published_date', axis='columns', inplace=True)
+reviews_df.drop('rating_image_url', axis='columns', inplace=True)
+reviews_df.drop('subratings', axis='columns', inplace=True)
+reviews_df.drop('travel_date', axis='columns', inplace=True)
+reviews_df.drop('url', axis='columns', inplace=True)
+reviews_df.drop('user', axis='columns', inplace=True)
+reviews_df.drop('lang', axis='columns', inplace=True)
 
 
 print reviews_df.head()

@@ -36,17 +36,25 @@ for coord in coords:
 			html = urlopen(url)
 			reviews_dict = json.load(html)
 
-			ids = (review_id['id'] for review_id in reviews_dict['data'])
-			ratings = (review_id['rating'] for review_id in reviews_dict['data'])
+			
+			# for i in reviews_dict['data']:
+			# 	data = []
+			# 	data.append('col1': i['id']) 
+			# 	data.append('col2': i['rating'])
+			# 	data.append('col3': i['text'])
+			hotel_df = pd.DataFrame(data = reviews_dict['data'])
+			reviews_df = hotel_df.append(hotel_df, ignore_index = True)
 
-			text = (review_id['text'] for review_id in reviews_dict['data'])
 
- 			# location_ids.append(reviews_dict['data'][0]['location_id'])
-	 		# text.append(reviews_dict['data'][0]['text'])
+print reviews_df.head()
 
-	 		hotel_df = pd.DataFrame([ids,ratings,text])
+	 		 	#hotel_df = pd.DataFrame(data, columns = ['1', '2', '3'])
+	 		 	#print hotel_df
 
-	 		reviews_df = reviews_df.append(hotel_df, ignore_index = True)
+
+	 		# reviews_df = reviews_df.append(hotel_df, ignore_index = True)
+
+	 	
 
 
 
